@@ -1308,6 +1308,16 @@
     const sendButton = document.getElementById("sendButton");
     const quickReplies = document.getElementById("quickReplies");
 
+    const leadState = {
+      role: "",
+      agency: "",
+      leadVolume: "",
+      useCase: "",
+      email: ""
+    };
+
+    let chatStage = "intro";
+
     function addBubble(text, role) {
       const bubble = document.createElement("div");
       bubble.className = "bubble " + role;
@@ -1316,42 +1326,126 @@
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    function botReply(message) {
-      const value = message.toLowerCase();
+    function containsAny(value, patterns) {
+      return patterns.some(function (pattern) {
+        return value.includes(pattern);
+      });
+    }
 
-      if (value.includes("price") || value.includes("pricing") || value.includes("cost")) {
+    function looksLikeEmail(value) {
+      return /[^\s@]+@[^\s@]+\.[^\s@]+/.test(value);
+    }
+
+    function inferUseCase(value) {
+      if (containsAny(value, ["whatsapp", "crm", "integration", "integrations"])) {
+        return "broader automation";
+      }
+      if (containsAny(value, ["website", "web chat", "chatbot", "chat widget"])) {
+        return "website chatbot";
+      }
+      if (containsAny(value, ["after hours", "after-hours", "qualification", "lead handling", "follow-up"])) {
+        return "lead qualification and follow-up";
+      }
+      return "";
+    }
+
+    function genericReply(value) {
+      if (containsAny(value, ["price", "pricing", "cost"])) {
         return "The current starter pack is positioned at AUD 900 setup and AUD 250 per month. If you want something broader — like WhatsApp follow-up, CRM integration, or multi-step automation — the scope depends on workflow complexity and lead volume.";
       }
 
-      if (value.includes("how it works") || value.includes("works") || value.includes("what is this") || value.includes("what do you do")) {
+      if (containsAny(value, ["how it works", "works", "what is this", "what do you do"])) {
         return "Automata Ventures gives real estate teams an AI sales concierge that responds instantly, qualifies enquiries, captures context like budget and timing, and routes stronger leads toward the next action without making the brand feel robotic.";
       }
 
-      if (value.includes("fit") || value.includes("agency") || value.includes("team") || value.includes("boutique")) {
-        return "It’s aimed at boutique and growth-focused agencies that want faster response times, cleaner qualification, and better after-hours lead handling. Roughly how many inbound enquiries does your team handle in a typical month?";
-      }
-
-      if (value.includes("demo") || value.includes("call") || value.includes("book")) {
-        return "Happy to help with that. Before pointing you to the next step, what’s your role, and are you mainly looking for website chat only or a broader lead-handling workflow?";
-      }
-
-      if (value.includes("after hours") || value.includes("after-hours") || value.includes("response time") || value.includes("slow response")) {
+      if (containsAny(value, ["after hours", "after-hours", "response time", "slow response"])) {
         return "That’s exactly where this tends to help most. The assistant keeps after-hours enquiries alive, captures useful detail immediately, and gives your team a much cleaner conversation to pick up in the morning.";
       }
 
-      if (value.includes("crm") || value.includes("integrat") || value.includes("whatsapp")) {
+      if (containsAny(value, ["crm", "integrat", "whatsapp"])) {
         return "Those can sit on the upgrade path once the base workflow is converting well. The starter setup is about getting live quickly with qualification, lead capture, and polished first response — then layering in channel and CRM integrations where they matter.";
       }
 
-      if (value.includes("volume") || value.includes("leads") || value.includes("enquiries") || value.includes("inquiries")) {
-        return "That helps. If you want, the next useful step is to share your agency name, role, and rough monthly enquiry volume so the rollout can be scoped around your lead flow rather than a generic template.";
+      return "Happy to help. If you want, I can ask a few quick questions and gauge whether the starter setup fits your agency.";
+    }
+
+    function nextPrompt() {
+      if (!leadState.role) {
+        chatStage = "ask_role";
+        return "First, what’s your role in the agency?";
       }
 
-      if (value.includes("email") || value.includes("contact") || value.includes("name is ")) {
-        return "Perfect — that’s enough to start a proper follow-up. The next step would normally be a short demo or rollout outline tailored to your agency’s lead flow.";
+      if (!leadState.agency) {
+        chatStage = "ask_agency";
+        return "And what agency or brand are you with?";
       }
 
-      return "Happy to help. If you want, tell me your role, agency type, and whether you’re looking for website chat only or a broader lead-handling workflow, and I’ll point you in the right direction.";
+      if (!leadState.leadVolume) {
+        chatStage = "ask_volume";
+        return "Roughly how many inbound enquiries does your team handle in a typical month?";
+      }
+
+      if (!leadState.useCase) {
+        chatStage = "ask_use_case";
+        return "Are you mainly looking for website chat only, faster qualification, after-hours follow-up, or a broader automation setup?";
+      }
+
+      if (!leadState.email) {
+        chatStage = "ask_email";
+        return "Looks like there’s a decent fit. What’s the best email for a demo link or follow-up?";
+      }
+
+      chatStage = "complete";
+      return "Perfect. That’s enough to shape a relevant next step. Use the \"Request Your Demo\" button, or email hello@automataventures.com and reference your agency details for a tailored walkthrough.";
+    }
+
+    function guidedReply(message) {
+      const value = message.toLowerCase();
+
+      if (chatStage === "intro") {
+        if (containsAny(value, ["demo", "book", "fit", "agency", "team", "how it works"])) {
+          return nextPrompt();
+        }
+
+        const useCase = inferUseCase(value);
+        if (useCase) {
+          leadState.useCase = useCase;
+          return nextPrompt();
+        }
+
+        return genericReply(value) + " If you want, I can ask a few quick questions and gauge fit for your agency.";
+      }
+
+      if (chatStage === "ask_role") {
+        leadState.role = message;
+        return nextPrompt();
+      }
+
+      if (chatStage === "ask_agency") {
+        leadState.agency = message;
+        return nextPrompt();
+      }
+
+      if (chatStage === "ask_volume") {
+        leadState.leadVolume = message;
+        return nextPrompt();
+      }
+
+      if (chatStage === "ask_use_case") {
+        leadState.useCase = message;
+        return nextPrompt();
+      }
+
+      if (chatStage === "ask_email") {
+        if (!looksLikeEmail(message)) {
+          return "That doesn’t look like an email address yet. Drop the best work email and I’ll treat that as the contact point.";
+        }
+
+        leadState.email = message;
+        return nextPrompt();
+      }
+
+      return "You’re set. If you want to continue, use the Request Your Demo button or email hello@automataventures.com and mention your agency, role, and enquiry volume.";
     }
 
     function sendMessage(forcedMessage) {
@@ -1367,8 +1461,8 @@
       }
 
       window.setTimeout(function () {
-        addBubble(botReply(message), "bot");
-      }, 450);
+        addBubble(guidedReply(message), "bot");
+      }, 350);
 
       chatInput.value = "";
       chatInput.focus();
