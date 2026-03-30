@@ -1244,25 +1244,25 @@
     </section>
   </main>
 
-  <aside class="chatbot-widget" aria-label="Property assistant demo">
+  <aside class="chatbot-widget" aria-label="Automata Ventures assistant demo">
     <div class="chat-header">
       <div>
-        <strong>Property Assistant</strong>
-        <span>Live qualification demo</span>
+        <strong>Automata Concierge</strong>
+        <span>Lead qualification demo</span>
       </div>
       <span>Online</span>
     </div>
     <div class="chat-body" id="chatBody">
-      <div class="bubble bot">Hi there. Are you looking to buy, sell, rent, or book an inspection?</div>
+      <div class="bubble bot">Hi — welcome to Automata Ventures. Want a quick look at how the assistant qualifies and routes real estate enquiries?</div>
       <div class="quick-replies" id="quickReplies">
-        <button type="button" data-reply="I want to buy">Buy</button>
-        <button type="button" data-reply="I want to sell">Sell</button>
-        <button type="button" data-reply="I want to rent">Rent</button>
-        <button type="button" data-reply="I want to book an inspection">Book inspection</button>
+        <button type="button" data-reply="How it works">How it works</button>
+        <button type="button" data-reply="Pricing">Pricing</button>
+        <button type="button" data-reply="Can it fit my agency?">Can it fit my agency?</button>
+        <button type="button" data-reply="Book a demo">Book a demo</button>
       </div>
     </div>
     <div class="chat-input">
-      <input id="chatInput" type="text" placeholder="Type your message...">
+      <input id="chatInput" type="text" placeholder="Ask about pricing, fit, or rollout...">
       <button class="button button-primary" type="button" id="sendButton">Send</button>
     </div>
   </aside>
@@ -1319,27 +1319,39 @@
     function botReply(message) {
       const value = message.toLowerCase();
 
-      if (value.includes("buy")) {
-        return "Perfect. What budget range and suburb are you considering so I can match the right listings?";
+      if (value.includes("price") || value.includes("pricing") || value.includes("cost")) {
+        return "The current starter pack is positioned at AUD 900 setup and AUD 250 per month. If you want something broader — like WhatsApp follow-up, CRM integration, or multi-step automation — the scope depends on workflow complexity and lead volume.";
       }
 
-      if (value.includes("sell")) {
-        return "Happy to help. What is the property address, and are you thinking of selling within the next 3 months?";
+      if (value.includes("how it works") || value.includes("works") || value.includes("what is this") || value.includes("what do you do")) {
+        return "Automata Ventures gives real estate teams an AI sales concierge that responds instantly, qualifies enquiries, captures context like budget and timing, and routes stronger leads toward the next action without making the brand feel robotic.";
       }
 
-      if (value.includes("rent")) {
-        return "Absolutely. Which area are you targeting, and when are you hoping to move?";
+      if (value.includes("fit") || value.includes("agency") || value.includes("team") || value.includes("boutique")) {
+        return "It’s aimed at boutique and growth-focused agencies that want faster response times, cleaner qualification, and better after-hours lead handling. Roughly how many inbound enquiries does your team handle in a typical month?";
       }
 
-      if (value.includes("inspection")) {
-        return "Great choice. Which listing caught your eye, and would you prefer a weekday or weekend inspection slot?";
+      if (value.includes("demo") || value.includes("call") || value.includes("book")) {
+        return "Happy to help with that. Before pointing you to the next step, what’s your role, and are you mainly looking for website chat only or a broader lead-handling workflow?";
       }
 
-      if (value.includes("budget") || value.includes("million") || value.includes("$")) {
-        return "That helps. If you’d like, I can also collect your name and phone number so an agent can send matching opportunities.";
+      if (value.includes("after hours") || value.includes("after-hours") || value.includes("response time") || value.includes("slow response")) {
+        return "That’s exactly where this tends to help most. The assistant keeps after-hours enquiries alive, captures useful detail immediately, and gives your team a much cleaner conversation to pick up in the morning.";
       }
 
-      return "Thanks. I can capture your details, preferred area, timing, and budget, then pass everything to an agent right away.";
+      if (value.includes("crm") || value.includes("integrat") || value.includes("whatsapp")) {
+        return "Those can sit on the upgrade path once the base workflow is converting well. The starter setup is about getting live quickly with qualification, lead capture, and polished first response — then layering in channel and CRM integrations where they matter.";
+      }
+
+      if (value.includes("volume") || value.includes("leads") || value.includes("enquiries") || value.includes("inquiries")) {
+        return "That helps. If you want, the next useful step is to share your agency name, role, and rough monthly enquiry volume so the rollout can be scoped around your lead flow rather than a generic template.";
+      }
+
+      if (value.includes("email") || value.includes("contact") || value.includes("name is ")) {
+        return "Perfect — that’s enough to start a proper follow-up. The next step would normally be a short demo or rollout outline tailored to your agency’s lead flow.";
+      }
+
+      return "Happy to help. If you want, tell me your role, agency type, and whether you’re looking for website chat only or a broader lead-handling workflow, and I’ll point you in the right direction.";
     }
 
     function sendMessage(forcedMessage) {
