@@ -1248,12 +1248,12 @@
     <div class="chat-header">
       <div>
         <strong>Automata Concierge</strong>
-        <span>Lead qualification demo</span>
+        <span>Instant agency fit check</span>
       </div>
       <span>Online</span>
     </div>
     <div class="chat-body" id="chatBody">
-      <div class="bubble bot">Hi — welcome to Automata Ventures. Want a quick look at how the assistant qualifies and routes real estate enquiries?</div>
+      <div class="bubble bot">Hi — welcome to Automata Ventures. I can show you how the assistant handles lead qualification, after-hours follow-up, and demo-ready routing for real estate teams.</div>
       <div class="quick-replies" id="quickReplies">
         <button type="button" data-reply="How it works">How it works</button>
         <button type="button" data-reply="Pricing">Pricing</button>
@@ -1262,7 +1262,7 @@
       </div>
     </div>
     <div class="chat-input">
-      <input id="chatInput" type="text" placeholder="Ask about pricing, fit, or rollout...">
+      <input id="chatInput" type="text" placeholder="Ask about pricing, fit, rollout, or integrations...">
       <button class="button button-primary" type="button" id="sendButton">Send</button>
     </div>
   </aside>
@@ -1405,7 +1405,7 @@
       }
 
       chatStage = "complete";
-      return "Perfect. That’s enough to shape a relevant next step. Use the \"Request Your Demo\" button, or email hello@automataventures.com and reference your agency details for a tailored walkthrough.";
+      return "Perfect. That’s enough to shape a relevant next step. Hit the Request Your Demo button, or email hello@automataventures.com with your agency, role, and enquiry volume for a tailored walkthrough.";
     }
 
     function guidedReply(message) {
@@ -1513,6 +1513,15 @@
               lead: leadState,
               history: chatHistory.slice(-12)
             })
+          }).then(function () {
+            if (!document.getElementById("leadCaptureNotice")) {
+              const notice = document.createElement("div");
+              notice.id = "leadCaptureNotice";
+              notice.className = "bubble bot";
+              notice.textContent = "Thanks — your details have been captured for follow-up.";
+              chatBody.appendChild(notice);
+              chatBody.scrollTop = chatBody.scrollHeight;
+            }
           }).catch(function () {
             return null;
           });
@@ -1533,6 +1542,15 @@
                 lead: leadState,
                 history: chatHistory.slice(-12)
               })
+            }).then(function () {
+              if (!document.getElementById("leadCaptureNotice")) {
+                const notice = document.createElement("div");
+                notice.id = "leadCaptureNotice";
+                notice.className = "bubble bot";
+                notice.textContent = "Thanks — your details have been captured for follow-up.";
+                chatBody.appendChild(notice);
+                chatBody.scrollTop = chatBody.scrollHeight;
+              }
             }).catch(function () {
               return null;
             });
