@@ -1313,8 +1313,16 @@
       agency: "",
       leadVolume: "",
       useCase: "",
-      email: ""
+      email: "",
+      intentLevel: "low"
     };
+
+    const chatHistory = [
+      {
+        role: "assistant",
+        content: "Hi — welcome to Automata Ventures. Want a quick look at how the assistant qualifies and routes real estate enquiries?"
+      }
+    ];
 
     let chatStage = "intro";
 
@@ -1324,6 +1332,7 @@
       bubble.textContent = text;
       chatBody.appendChild(bubble);
       chatBody.scrollTop = chatBody.scrollHeight;
+      chatHistory.push({ role: role === "bot" ? "assistant" : "user", content: text });
     }
 
     function containsAny(value, patterns) {
@@ -1448,7 +1457,7 @@
       return "You’re set. If you want to continue, use the Request Your Demo button or email hello@automataventures.com and mention your agency, role, and enquiry volume.";
     }
 
-    function sendMessage(forcedMessage) {
+    async function sendMessage(forcedMessage) {
       const message = (forcedMessage || chatInput.value).trim();
       if (!message) {
         return;
@@ -1460,12 +1469,43 @@
         quickReplies.remove();
       }
 
-      window.setTimeout(function () {
-        addBubble(guidedReply(message), "bot");
-      }, 350);
-
       chatInput.value = "";
       chatInput.focus();
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message,
+            lead: leadState,
+            history: chatHistory.slice(-12)
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("chat request failed");
+        }
+
+        const data = await response.json();
+
+        if (data.lead) {
+          leadState.role = data.lead.role || leadState.role;
+          leadState.agency = data.lead.agency || leadState.agency;
+          leadState.leadVolume = data.lead.leadVolume || leadState.leadVolume;
+          leadState.useCase = data.lead.useCase || leadState.useCase;
+          leadState.email = data.lead.email || leadState.email;
+          leadState.intentLevel = data.lead.intentLevel || leadState.intentLevel;
+        }
+
+        addBubble(data.reply || guidedReply(message), "bot");
+      } catch (error) {
+        window.setTimeout(function () {
+          addBubble(guidedReply(message), "bot");
+        }, 250);
+      }
     }
 
     document.getElementById("calcButton").addEventListener("click", calculateROI);
