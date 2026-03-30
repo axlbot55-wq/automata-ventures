@@ -1501,9 +1501,42 @@
         }
 
         addBubble(data.reply || guidedReply(message), "bot");
+
+        if (leadState.email) {
+          fetch("/api/lead", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              page: window.location.pathname,
+              lead: leadState,
+              history: chatHistory.slice(-12)
+            })
+          }).catch(function () {
+            return null;
+          });
+        }
       } catch (error) {
         window.setTimeout(function () {
-          addBubble(guidedReply(message), "bot");
+          const fallbackReply = guidedReply(message);
+          addBubble(fallbackReply, "bot");
+
+          if (leadState.email) {
+            fetch("/api/lead", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                page: window.location.pathname,
+                lead: leadState,
+                history: chatHistory.slice(-12)
+              })
+            }).catch(function () {
+              return null;
+            });
+          }
         }, 250);
       }
     }
