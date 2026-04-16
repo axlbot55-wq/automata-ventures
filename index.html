@@ -1488,6 +1488,10 @@
       const value = message.toLowerCase();
 
       if (chatStage === "intro") {
+        if (containsAny(value, ["yes", "yeah", "sure", "okay", "ok", "yep", "please", "go ahead", "let's do it", "sounds good"])) {
+          return nextPrompt();
+        }
+
         if (containsAny(value, ["demo", "book", "fit", "agency", "team", "how it works"])) {
           return nextPrompt();
         }
