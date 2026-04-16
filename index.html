@@ -973,7 +973,7 @@
             <p>
               Automata Ventures helps luxury and boutique real estate teams respond in seconds,
               qualify buyer intent automatically, and turn more inbound enquiries into booked
-              inspections — without compromising brand experience.
+              inspections - without compromising brand experience.
             </p>
             <div class="hero-actions">
               <a href="#cta" class="button button-primary">Book A Live Demo</a>
@@ -1088,7 +1088,7 @@
               Instead of a cold inbox lead, your agent receives a qualified buyer snapshot with the
               context needed to move confidently.
             </div>
-            <div class="quote-meta">Budget, area, timing, intent, and the recommended next action — before your team picks up the conversation.</div>
+            <div class="quote-meta">Budget, area, timing, intent, and the recommended next action - before your team picks up the conversation.</div>
           </div>
 
           <div class="metric-stack">
@@ -1221,9 +1221,9 @@
             <div class="label">Founding Agency Pilot</div>
             <h2>Launch a tailored AI concierge without rebuilding your workflow.</h2>
             <p style="margin: 18px 0 0; color: var(--muted); line-height: 1.75;">
-              For a small number of boutique and prestige agencies, we’re offering a tailored pilot
+              For a small number of boutique and prestige agencies, we're offering a tailored pilot
               rollout designed to improve enquiry response, qualification, and inspection booking
-              without disrupting your team’s day-to-day operations.
+              without disrupting your team's day-to-day operations.
             </p>
             <ul class="feature-list">
               <li>Tailored assistant trained on your listings, positioning, and buyer FAQs</li>
@@ -1268,9 +1268,9 @@
         <div class="cta reveal">
           <div>
             <div class="label" style="background: rgba(255,255,255,0.08); color: #f4cc96;">Next Step</div>
-            <h2>If your agency is paying for leads, you can’t afford dead time after enquiry.</h2>
+            <h2>If your agency is paying for leads, you can't afford dead time after enquiry.</h2>
             <p>
-              See how the concierge greets, qualifies, and routes buyers — then talk through how a
+              See how the concierge greets, qualifies, and routes buyers - then talk through how a
               founding pilot could fit your listings, team workflow, and service standard.
             </p>
           </div>
@@ -1292,7 +1292,7 @@
       <span>Online</span>
     </div>
     <div class="chat-body" id="chatBody">
-      <div class="bubble bot">Hi — welcome to Automata Ventures. I can show you how the concierge handles high-value property enquiries, after-hours follow-up, and buyer qualification for prestige real estate teams.</div>
+      <div class="bubble bot">Hi - welcome to Automata Ventures. I can show you how the concierge handles high-value property enquiries, after-hours follow-up, and buyer qualification for prestige real estate teams.</div>
       <div class="quick-replies" id="quickReplies">
         <button type="button" data-reply="How it works">How it works</button>
         <button type="button" data-reply="Who is this for?">Who is this for?</button>
@@ -1361,7 +1361,7 @@
     const chatHistory = [
       {
         role: "assistant",
-        content: "Hi — welcome to Automata Ventures. Want a quick look at how the concierge qualifies and routes high-value real estate enquiries?"
+        content: "Hi - welcome to Automata Ventures. Want a quick look at how the concierge qualifies and routes high-value real estate enquiries?"
       }
     ];
 
@@ -1427,29 +1427,37 @@
     }
 
     function genericReply(value) {
-      if (containsAny(value, ["price", "pricing", "cost"])) {
-        return "We’re currently framing this as a founding agency pilot rather than a commodity SaaS plan. The right scope depends on your enquiry flow, brand requirements, and whether you want website-only qualification or a broader follow-up setup.";
+      if (containsAny(value, ["price", "pricing", "cost", "how much", "charge", "fee", "subscription", "plan", "package"])) {
+        return "We're currently offering a founding agency pilot rather than a fixed SaaS plan. Pricing depends on your enquiry volume, brand requirements, and whether you need website-only qualification or a broader follow-up setup. I can walk through a few quick questions to give you a clearer picture — want me to?";
       }
 
-      if (containsAny(value, ["how it works", "works", "what is this", "what do you do"])) {
-        return "Automata Ventures gives real estate teams an AI concierge that responds instantly, qualifies enquiries, captures context like budget and timing, and routes serious buyers toward the next action without making the brand feel robotic.";
+      if (containsAny(value, ["how it works", "works", "what is this", "what do you do", "what does it do"])) {
+        return "Automata Ventures gives real estate teams an AI concierge that responds instantly, qualifies enquiries, captures context like budget and timing, and routes serious buyers toward the next action — without making the brand feel robotic.";
       }
 
-      if (containsAny(value, ["after hours", "after-hours", "response time", "slow response"])) {
-        return "That’s where this tends to help most. The concierge keeps after-hours enquiries alive, captures useful detail immediately, and gives your team a much cleaner buyer conversation to pick up in the morning.";
+      if (containsAny(value, ["after hours", "after-hours", "response time", "slow response", "missed enquiry", "missed lead"])) {
+        return "That's where this tends to help most. The concierge keeps after-hours enquiries alive, captures useful detail immediately, and gives your team a much cleaner buyer conversation to pick up in the morning.";
       }
 
-      if (containsAny(value, ["crm", "integrat", "whatsapp"])) {
+      if (containsAny(value, ["crm", "integrat", "whatsapp", "api"])) {
         return "Those can be layered in once the core enquiry flow is working well. The first priority is fast response, polished qualification, and clean handoff for serious prospects.";
       }
 
-      return "Happy to help. If you want, I can ask a few quick questions and gauge whether a founding pilot fits your agency.";
+      if (containsAny(value, ["demo", "book", "walkthrough", "see it", "try it"])) {
+        return "I can help with that. Want me to ask a few quick questions to see if a founding pilot fits your agency? Or you can book a 20-minute walkthrough directly via the button below.";
+      }
+
+      if (containsAny(value, ["fit", "right for", "my agency", "who is this for", "boutique", "prestige"])) {
+        return "The concierge is designed for boutique and prestige real estate agencies that want a faster, more attentive first response without compromising brand tone. Want me to ask a few questions to check if it's a fit?";
+      }
+
+      return "Good question. I can walk through how the concierge works, discuss pricing, or check whether it fits your agency — what would be most helpful?";
     }
 
     function nextPrompt() {
       if (!leadState.role) {
         chatStage = "ask_role";
-        return "First, what’s your role in the agency?";
+        return "First, what's your role in the agency?";
       }
 
       if (!leadState.agency) {
@@ -1469,11 +1477,11 @@
 
       if (!leadState.email) {
         chatStage = "ask_email";
-        return "Looks like there could be a fit. What’s the best email for a demo link or follow-up?";
+        return "Looks like there could be a fit. What's the best email for a demo link or follow-up?";
       }
 
       chatStage = "complete";
-      return "Perfect. That’s enough to shape a relevant next step. Use the walkthrough button below, or email hello@automataventures.com with your agency, role, and enquiry volume for a tailored pilot discussion.";
+      return "Perfect. That's enough to shape a relevant next step. Use the walkthrough button below, or email hello@automataventures.com with your agency, role, and enquiry volume for a tailored pilot discussion.";
     }
 
     function guidedReply(message) {
@@ -1490,7 +1498,7 @@
           return nextPrompt();
         }
 
-        return genericReply(value) + " If you want, I can ask a few quick questions and gauge fit for your agency.";
+        return genericReply(value);
       }
 
       if (chatStage === "ask_role") {
@@ -1515,14 +1523,14 @@
 
       if (chatStage === "ask_email") {
         if (!looksLikeEmail(message)) {
-          return "That doesn’t look like an email address yet. Drop the best work email and I’ll treat that as the contact point.";
+          return "That doesn't look like an email address yet. Drop the best work email and I'll treat that as the contact point.";
         }
 
         leadState.email = message;
         return nextPrompt();
       }
 
-      return "You’re set. If you want to continue, use the walkthrough button or email hello@automataventures.com and mention your agency, role, and enquiry volume.";
+      return "You're set. If you want to continue, use the walkthrough button or email hello@automataventures.com and mention your agency, role, and enquiry volume.";
     }
 
     async function sendMessage(forcedMessage) {
@@ -1590,7 +1598,7 @@
               const notice = document.createElement("div");
               notice.id = "leadCaptureNotice";
               notice.className = "bubble bot";
-              notice.textContent = "Thanks — your details have been captured for follow-up.";
+              notice.textContent = "Thanks - your details have been captured for follow-up.";
               chatBody.appendChild(notice);
               chatBody.scrollTop = chatBody.scrollHeight;
             }
@@ -1619,7 +1627,7 @@
                 const notice = document.createElement("div");
                 notice.id = "leadCaptureNotice";
                 notice.className = "bubble bot";
-                notice.textContent = "Thanks — your details have been captured for follow-up.";
+                notice.textContent = "Thanks - your details have been captured for follow-up.";
                 chatBody.appendChild(notice);
                 chatBody.scrollTop = chatBody.scrollHeight;
               }
