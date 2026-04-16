@@ -1127,19 +1127,19 @@
           <div class="form-card reveal">
             <div class="field">
               <label for="leads">Monthly property enquiries</label>
-              <input id="leads" type="number" min="0" value="120">
+              <input id="leads" type="number" inputmode="decimal" min="0" value="120">
             </div>
             <div class="field">
               <label for="closeRate">Close rate on qualified conversations (%)</label>
-              <input id="closeRate" type="number" min="0" max="100" value="12">
+              <input id="closeRate" type="number" inputmode="decimal" min="0" max="100" value="12">
             </div>
             <div class="field">
               <label for="dealValue">Average commission per deal (AUD)</label>
-              <input id="dealValue" type="number" min="0" value="18000">
+              <input id="dealValue" type="number" inputmode="decimal" min="0" value="18000">
             </div>
             <div class="field">
               <label for="recoveryRate">Estimated enquiry recovery from faster response (%)</label>
-              <input id="recoveryRate" type="number" min="0" max="100" value="18">
+              <input id="recoveryRate" type="number" inputmode="decimal" min="0" max="100" value="18">
             </div>
             <button class="button button-primary" type="button" id="calcButton">Calculate Opportunity</button>
             <p class="fine-print">
@@ -1301,7 +1301,7 @@
       </div>
     </div>
     <div class="chat-input" id="chatInputWrap">
-      <input id="chatInput" type="text" placeholder="Ask about fit, rollout, buyer qualification, or integrations...">
+      <input id="chatInput" type="text" autocomplete="off" enterkeyhint="send" placeholder="Ask about fit, rollout, buyer qualification, or integrations...">
       <button class="button button-primary" type="button" id="sendButton">Send</button>
     </div>
   </aside>
