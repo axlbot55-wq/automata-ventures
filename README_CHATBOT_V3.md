@@ -36,3 +36,11 @@ If `LEAD_WEBHOOK_URL` is set, captured leads can be forwarded to your chosen sin
 
 ## Recommended next step
 Point `LEAD_WEBHOOK_URL` to Airtable, Sheets, Zapier, Make, a CRM bridge, or an email relay.
+
+## Agent workflow
+- Read `AGENTS.md` and `SOUL.md` first when working in this repo.
+- Use the GitHub issue templates in `.github/ISSUE_TEMPLATE/` for new work.
+- Use `.github/pull_request_template.md` for implementation handoff.
+- axlBot should triage, summarize, and route work.
+- axlBuilder should implement code changes and report back with the exact file(s) changed.
+- Never ask for a personal GitHub token (PAT) or `GH_TOKEN` when GitHub connector/App access is available.
