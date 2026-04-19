@@ -1,0 +1,68 @@
+name: Agent Task
+description: Use for tasks routed to axlBot or axlBuilder
+labels:
+  - agent-task
+title: "[agent] <short task summary>"
+body:
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Primary agent
+      description: Who should own this issue first?
+      options:
+        - axlBot
+        - axlBuilder
+        - Both
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0 - urgent
+        - P1 - high
+        - P2 - medium
+        - P3 - low
+    validations:
+      required: true
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: One-sentence description of the task
+      placeholder: Update the pricing section on the homepage
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Background, links, screenshots, or relevant chat context
+      placeholder: Include the reason for the request and any constraints
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope / files
+      description: File names, routes, or pages to change
+      placeholder: index.html, styles.css, pricing section
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How we know the task is done
+      placeholder: Replace old pricing cards with new copy; confirm on main branch; verify live page renders
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes for the agent
+      description: Any extra instructions, caveats, or follow-up steps
+      placeholder: Keep the change minimal and report back with the exact file touched
+    validations:
+      required: false
