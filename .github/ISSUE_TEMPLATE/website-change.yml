@@ -1,0 +1,52 @@
+name: Website Change
+description: Use for copy, layout, pricing, or content updates
+labels:
+  - website-change
+title: "[site] <short change request>"
+body:
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Primary agent
+      description: Who should own the change first?
+      options:
+        - axlBot
+        - axlBuilder
+        - Both
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page or file
+      placeholder: index.html, pricing page, homepage hero
+    validations:
+      required: true
+  - type: textarea
+    id: request
+    attributes:
+      label: Requested change
+      placeholder: Replace the old pricing cards with the new three-tier offer
+    validations:
+      required: true
+  - type: textarea
+    id: content
+    attributes:
+      label: New copy or design direction
+      placeholder: Paste the exact text, screenshots, or design notes here
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: What must be true when the change is done
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      placeholder: Anything the implementer should know before starting
+    validations:
+      required: false
