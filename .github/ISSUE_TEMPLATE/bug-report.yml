@@ -1,0 +1,56 @@
+name: Bug Report
+description: Use for bugs, broken flows, or unexpected behavior
+labels:
+  - bug
+title: "[bug] <short description>"
+body:
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Primary agent
+      description: Who should investigate first?
+      options:
+        - axlBot
+        - axlBuilder
+        - Both
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - P0 - blocking
+        - P1 - major
+        - P2 - moderate
+        - P3 - minor
+    validations:
+      required: true
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      placeholder: WhatsApp lead routing fails after login
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: 1. Open WhatsApp flow 2. Trigger HubSpot action 3. Observe error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual
+      placeholder: Expected result and what happened instead
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Logs, screenshots, links, or chat references
+    validations:
+      required: false
