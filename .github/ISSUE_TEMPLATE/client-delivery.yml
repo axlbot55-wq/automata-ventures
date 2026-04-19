@@ -1,0 +1,59 @@
+name: Client Delivery
+description: Use for scoped client work, proposals, or implementation bundles
+labels:
+  - client-delivery
+title: "[client] <client or project name>"
+body:
+  - type: dropdown
+    id: owner
+    attributes:
+      label: Primary agent
+      description: Who should lead this delivery?
+      options:
+        - axlBot
+        - axlBuilder
+        - Both
+    validations:
+      required: true
+  - type: input
+    id: client
+    attributes:
+      label: Client or project
+      placeholder: Automata Ventures website refresh
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      placeholder: What outcome does the client want?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      placeholder: What is included and what is out of scope?
+    validations:
+      required: true
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables
+      placeholder: Files, pages, docs, demos, or handoff items
+    validations:
+      required: true
+  - type: textarea
+    id: timeline
+    attributes:
+      label: Timeline
+      placeholder: Due date, milestones, or dependencies
+    validations:
+      required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      placeholder: Any approvals, brand constraints, or contacts
+    validations:
+      required: false
