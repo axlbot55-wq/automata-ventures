@@ -6,28 +6,40 @@ labels: 'enhancement'
 assignees: 'axlemilio'
 ---
 
-## Description
-<!-- Briefly describe the changes made in this pull request. -->
+## Summary
 
-## Related Issues
-<!-- Link any relevant issues (e.g., #123, resolves #456). -->
+Describe the change in one or two sentences.
 
-## Changes Made
-<!-- List the specific changes made. -->
-- [ ] Updated `index.html` pricing section
-<!-- Example: - [x] Implemented new feature X -->
+## Linked Issue
 
-## Review Checklist
-<!-- Please check off the boxes below as you complete each step. -->
-- [ ] Code follows project coding standards.
-- [ ] Tests (if applicable) have been added/updated and pass.
-- [ ] Documentation (if applicable) has been updated.
-- [ ] Changes have been reviewed locally.
-- [ ] All new and existing tests pass.
+Fixes #
 
-## Deployment Notes
-<!-- Any specific instructions for deployment, if applicable. -->
+## What changed
+
+- 
+- 
+- 
+
+## Why
+
+Explain the reason for the change and the outcome we want.
+
+## Testing
+
+- [ ] Ran locally
+- [ ] Verified in browser
+- [ ] Verified on mobile
+- [ ] Checked console or logs
+- [ ] Other: 
+
+## Screenshots or Evidence
+
+Add before/after screenshots, links, or logs if relevant.
+
+## Notes for reviewer
+
+Anything a reviewer should know before approving.
 
 ## Confirmation
-<!-- axlBuilder: Confirm when the task is fully completed and pushed. -->
-✅ Pricing section updated and pushed.
+
+✅ Change is complete and ready for review.
