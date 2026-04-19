@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a Bug
+    url: https://github.com/axlbot55-wq/automata-ventures/issues/new?template=bug-report.yml
+    about: Report a problem or unexpected behavior.
+  - name: Request a Website Change
+    url: https://github.com/axlbot55-wq/automata-ventures/issues/new?template=website-change.yml
+    about: Suggest an update or new feature for the website.
+  - name: New Client Delivery Request
+    url: https://github.com/axlbot55-wq/automata-ventures/issues/new?template=client-delivery.yml
+    about: Initiate a new client project or delivery.
